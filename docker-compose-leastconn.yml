@@ -1,0 +1,24 @@
+services:
+
+  backend-a:
+    build: ./backend-a
+
+  backend-b:
+    build: ./backend-b
+
+  backend-c:
+    build: ./backend-c
+
+  load-balancer:
+    image: nginx:latest
+
+    ports:
+      - "8082:80"
+
+    volumes:
+      - ./nginx-leastconn.conf:/etc/nginx/nginx.conf:ro
+
+    depends_on:
+      - backend-a
+      - backend-b
+      - backend-c
